@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+
 """
 
 台幣計價-美元股票資產配置
@@ -15,7 +15,7 @@ import seaborn as sns
 from FinMind.data import DataLoader
 import matplotlib.pyplot as plt
 
-plt.rcParams["font.sans-serif"] = ["Microsoft JhengHei"]
+plt.rcParams["font.sans-serif"] = ["SimHei"]
 plt.rcParams["axes.unicode_minus"] = False
 api = DataLoader()
 

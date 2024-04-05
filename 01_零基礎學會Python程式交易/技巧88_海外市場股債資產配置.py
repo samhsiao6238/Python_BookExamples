@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+
 """
 
 美元股債資產配置(基礎)
@@ -20,7 +20,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import requests
 
-plt.rcParams["font.sans-serif"] = ["Microsoft JhengHei"]
+plt.rcParams["font.sans-serif"] = ["SimHei"]
 plt.rcParams["axes.unicode_minus"] = False
 
 # 取出常見全世界債券ETF

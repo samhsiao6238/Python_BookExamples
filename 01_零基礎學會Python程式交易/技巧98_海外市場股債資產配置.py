@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+
 """
 
 美元計價-美元股票資產配置
@@ -19,7 +19,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import requests
 
-plt.rcParams["font.sans-serif"] = ["Microsoft JhengHei"]
+plt.rcParams["font.sans-serif"] = ["SimHei"]
 plt.rcParams["axes.unicode_minus"] = False
 
 # 取出低成本 股市ETF

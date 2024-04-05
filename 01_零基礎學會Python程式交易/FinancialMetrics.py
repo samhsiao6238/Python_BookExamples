@@ -3,7 +3,7 @@ import numpy_financial as npf
 from Data import getMultipleReturn
 
 # 在繪圖套件中載入中文字型
-plt.rcParams["font.sans-serif"] = ["Microsoft JhengHei"]
+plt.rcParams["font.sans-serif"] = ["SimHei"]
 plt.rcParams["axes.unicode_minus"] = False
 
 
@@ -17,7 +17,7 @@ def RiskReturnRatio(data, price_column):
     # 計算年化標準差
     # 日標準差 * (252**0.5)
     # 月標準差 * (12**0.5)
-    ann_risk = returns.std() * (252 ** 0.5)
+    ann_risk = returns.std() * (252**0.5)
 
     # 計算夏普比率 ( 年化報酬 / 年化風險 )
     rf = 0.01
@@ -40,7 +40,9 @@ def RiskReturnRatio(data, price_column):
 
 
 # 計算定期定額報酬率以及繪製權益曲線圖
-def ReturnRegularFixedInvestment(getDataFunction, symbol, price_column, once_amount):
+def ReturnRegularFixedInvestment(
+    getDataFunction, symbol, price_column, once_amount
+):
     # 取得商品資料
     data = getDataFunction(symbol)
     data["ret"] = data[price_column].pct_change().copy()
@@ -64,7 +66,9 @@ def ReturnRegularFixedInvestment(getDataFunction, symbol, price_column, once_amo
     inv_col = [i for i in data.columns if i[:3] == "inv"]
     for col in inv_col:
         data[col].fillna(method="ffill", inplace=True)
-        data[col] *= data.loc[data[col].notna(), "cap_ret"].iloc[1:].cumprod().copy()
+        data[col] *= data.loc[
+            data[col].notna(), "cap_ret"
+        ].iloc[1:].cumprod().copy()
     data["final_cap"] = data[inv_col].sum(axis=1).copy()
 
     # 計算內部報酬率
@@ -94,12 +98,15 @@ def MultipleReturnRegularFixedInvestment(
     for symbol in symbols:
         print(f"商品代碼 {symbol}")
         ReturnRegularFixedInvestment(
-            getDataFunction, symbol, price_column, once_amount)
+            getDataFunction, symbol, price_column, once_amount
+        )
         plt.show()
 
 
 # 資產配置風險報酬計算
-def PortfolioRiskReturnRatio(getDataFunction, asset_allocation, price_column, cap):
+def PortfolioRiskReturnRatio(
+    getDataFunction, asset_allocation, price_column, cap
+):
 
     # 抓到所有歷史報酬率
     ret_dataframe = getMultipleReturn(
@@ -114,8 +121,11 @@ def PortfolioRiskReturnRatio(getDataFunction, asset_allocation, price_column, ca
     weight_ann_ret = (ann_ret * w).sum()
     cov = (ret_dataframe).cov()
     weight_ann_risk = (
-        cov.mul(asset_allocation, axis=0).mul(
-            asset_allocation, axis=1).sum().sum()
+        cov.mul(
+            asset_allocation, axis=0
+        ).mul(
+            asset_allocation, axis=1
+        ).sum().sum()
     )
 
     # 顯示投資組合風險與報酬

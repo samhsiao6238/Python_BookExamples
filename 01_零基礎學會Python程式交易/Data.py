@@ -15,17 +15,23 @@ if not os.path.exists(dpath):
 
 
 def getDataFM(prod):
+    # 備份文件的資料夾
+    folder_name = "data"
+    # 檢查資料夾是否存在
+    if not os.path.exists(folder_name):
+        os.makedirs(folder_name)
+
     # 1. 定義備份檔案名稱
-    bakfile = f"{dpath}\\yf_{prod}.csv"
+    bakfile = os.path.join(folder_name, f"{prod}.csv")
     # 2. 檢視是否有歷史資料(本地端)
     if os.path.exists(bakfile):
         yfdata = pd.read_csv(bakfile)
         yfdata["Date"] = pd.to_datetime(yfdata["Date"], format="%Y-%m-%d")
         yfdata.set_index("Date", inplace=True)
     else:
-        yfdata = yf.download(f'{prod}.TW', period="max", progress=False)
+        yfdata = yf.download(f"{prod}.TW", period="max", progress=False)
         if yfdata.shape[0] == 0:
-            yfdata = yf.download(f'{prod}.TWO', period="max", progress=False)
+            yfdata = yf.download(f"{prod}.TWO", period="max", progress=False)
         yfdata.columns = [i.lower() for i in yfdata.columns]
         # 上網下載後 存到本地端
         yfdata.to_csv(bakfile)
@@ -65,8 +71,14 @@ def getDataFM(prod):
 
 
 def getDataYF(prod):
+    # 備份文件的資料夾
+    folder_name = "data"
+    # 檢查資料夾是否存在
+    if not os.path.exists(folder_name):
+        os.makedirs(folder_name)
+
     # 1. 定義備份檔案名稱
-    bakfile = f"{dpath}\\yf_{prod}.csv"
+    bakfile = os.path.join(folder_name, f"yf_{prod}.csv")
     # 2. 檢視是否有歷史資料(本地端)
     if os.path.exists(bakfile):
         yfdata = pd.read_csv(bakfile)
